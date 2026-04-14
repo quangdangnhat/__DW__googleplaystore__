@@ -1,0 +1,86 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{float}
+
+\title{Google Play Store Data Warehouse Project}
+\author{Your Name}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+This project aims to design and implement a data warehouse workflow using the Google Play Store dataset. The work includes source analysis, reconciled database design, data quality assessment, cleaning, multidimensional modeling, and analytical support for visualization.
+
+\section{Data Source and Preliminary Requirement Analysis}
+The project uses the \texttt{googleplaystore.csv} dataset as the primary data source. The dataset contains information about Google Play Store applications, including app name, category, rating, reviews, size, installs, type, price, content rating, genres, last updated date, current version, and required Android version.
+
+The main analytical goal is to study the Google Play Store ecosystem from a business and data perspective. In particular, the project focuses on how app performance varies across categories, monetization models, audience targets, and technical characteristics.
+
+The candidate measures are rating, reviews, installs, price, and an optional derived measure app count. The candidate dimensions are application, category, app type, content rating, genre, Android version, and date.
+
+\section{Reconciled Database Design}
+The original CSV source is first preserved in a raw staging table. Then, the reconciled layer organizes the source into a structured relational schema with domain tables and a central \texttt{app\_snapshot} table.
+
+The reconciled database includes:
+\begin{itemize}
+    \item a raw source table: \texttt{raw\_googleplaystore}
+    \item domain tables: \texttt{app}, \texttt{category}, \texttt{app\_type}, \texttt{content\_rating}, \texttt{android\_version}, \texttt{genre}
+    \item a central reconciled table: \texttt{app\_snapshot}
+    \item a bridge table for multi-valued genres: \texttt{app\_snapshot\_genre}
+\end{itemize}
+
+The grain of the reconciled central table is one row per application snapshot extracted from the source.
+
+\section{ETL to the Reconciled Database}
+The ETL process imports the source CSV into the raw table and then populates the reconciled tables. During this phase, several transformations are applied:
+\begin{itemize}
+    \item trimming and normalizing textual values
+    \item converting reviews, installs, and price into numeric fields
+    \item converting size into megabytes where possible
+    \item parsing last updated values into the date type
+    \item excluding one malformed source row
+    \item splitting multi-valued genres into a separate many-to-many relation
+\end{itemize}
+
+\section{Data Quality Assessment and Cleaning}
+The dataset presents several quality issues, including missing values, duplicate app names, and consistency issues. A dedicated data quality assessment phase is therefore required before building the final data warehouse.
+
+The first reconciled ETL produced:
+\begin{itemize}
+    \item 10841 raw rows
+    \item 10840 snapshot rows
+    \item 11288 snapshot-genre links
+\end{itemize}
+
+These results confirm that one malformed row was excluded and that the genre field was successfully normalized.
+
+\section{Next Steps}
+The next steps of the project are:
+\begin{itemize}
+    \item run formal DQA queries on the reconciled layer
+    \item define data cleaning rules
+    \item identify the central fact and dimensions
+    \item design the DFM and star schema
+    \item implement ETL from the reconciled database to the data warehouse
+    \item prepare analytical visualizations
+\end{itemize}
+
+\section{Conclusion}
+The project has already established the first core components of the pipeline: source loading, reconciled schema creation, and the first ETL to a structured database layer. These steps provide the foundation for the data quality and warehouse design phases.
+
+\end{document}
