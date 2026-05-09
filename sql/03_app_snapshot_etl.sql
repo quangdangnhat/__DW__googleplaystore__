@@ -1,121 +1,138 @@
 -- =========================================================
--- FILE: 03_app_snapshot_etl.sql
--- PURPOSE: Populate app_snapshot from raw_googleplaystore
+-- 03_app_snapshot_etl.sql
+-- Project: Google Play Store
+-- Purpose:
+--   Transform raw rows into typed reconciled snapshot rows.
 -- =========================================================
+begin;
 
-WITH clean_source AS (
-    SELECT
-        r.raw_id,
-        TRIM(r.app_raw) AS app_name,
-        LOWER(TRIM(r.app_raw)) AS app_name_normalized,
-        NULLIF(TRIM(r.category_raw), '') AS category_name,
-        NULLIF(TRIM(r.type_raw), '') AS app_type_name,
-        NULLIF(TRIM(r.content_rating_raw), '') AS content_rating_name,
-        NULLIF(TRIM(r.android_ver_raw), '') AS android_version_label,
-        NULLIF(TRIM(r.current_ver_raw), '') AS current_version,
-        NULLIF(TRIM(r.size_raw), '') AS size_label_raw,
+delete from reconciled.app_snapshot;
 
-        CASE
-            WHEN NULLIF(TRIM(r.rating_raw), '') IS NOT NULL
-                 AND TRIM(r.rating_raw) ~ '^[0-9]+(\.[0-9]+)?$'
-            THEN TRIM(r.rating_raw)::NUMERIC(3,2)
-            ELSE NULL
-        END AS rating,
-
-        CASE
-            WHEN NULLIF(TRIM(r.reviews_raw), '') IS NOT NULL
-                 AND TRIM(r.reviews_raw) ~ '^[0-9]+$'
-            THEN TRIM(r.reviews_raw)::BIGINT
-            ELSE NULL
-        END AS reviews_count,
-
-        CASE
-            WHEN REGEXP_REPLACE(COALESCE(r.installs_raw, ''), '[^0-9]', '', 'g') <> ''
-            THEN REGEXP_REPLACE(r.installs_raw, '[^0-9]', '', 'g')::BIGINT
-            ELSE NULL
-        END AS installs_count,
-
-        CASE
-            WHEN REGEXP_REPLACE(COALESCE(r.price_raw, ''), '[^0-9\.]', '', 'g') <> ''
-            THEN REGEXP_REPLACE(r.price_raw, '[^0-9\.]', '', 'g')::NUMERIC(10,2)
-            ELSE NULL
-        END AS price_amount,
-
-        CASE
-            WHEN TRIM(r.size_raw) ~ '^[0-9]+(\.[0-9]+)?M$'
-            THEN REPLACE(TRIM(r.size_raw), 'M', '')::NUMERIC(10,2)
-
-            WHEN TRIM(r.size_raw) ~ '^[0-9]+(\.[0-9]+)?k$'
-            THEN (REPLACE(TRIM(r.size_raw), 'k', '')::NUMERIC(10,2) / 1024)
-
-            WHEN TRIM(r.size_raw) = 'Varies with device'
-            THEN NULL
-
-            ELSE NULL
-        END AS size_mb,
-
-        CASE
-            WHEN TRIM(r.last_updated_raw) ~ '^[A-Za-z]+ [0-9]{1,2}, [0-9]{4}$'
-            THEN TO_DATE(TRIM(r.last_updated_raw), 'FMMonth FMDD, YYYY')
-
-            WHEN TRIM(r.last_updated_raw) ~ '^[0-9]{1,2}-[A-Za-z]{3}-[0-9]{2}$'
-            THEN TO_DATE(TRIM(r.last_updated_raw), 'DD-Mon-YY')
-
-            ELSE NULL
-        END AS last_updated_date
-
-    FROM raw_googleplaystore r
-    WHERE r.app_raw IS NOT NULL
-      AND TRIM(r.app_raw) <> ''
-      AND COALESCE(TRIM(r.category_raw), '') <> '1.9'
-)
-
-INSERT INTO app_snapshot (
+with
+  src as (
+    select
+      r.raw_id,
+      r."App",
+      r."Category",
+      r."Rating",
+      r."Reviews",
+      r."Size",
+      r."Installs",
+      r."Type",
+      r."Price",
+      r."Content Rating",
+      r."Last Updated",
+      r."Current Ver",
+      r."Android Ver"
+    from
+      raw.googleplaystore_import r
+  ),
+  typed as (
+    select
+      s.raw_id,
+      s."App" as app_raw,
+      s."Category" as category_raw,
+      s."Type" as type_raw,
+      s."Content Rating" as content_rating_raw,
+      case
+        when s."Rating" is null
+        or trim(s."Rating") = '' then null
+        when trim(s."Rating") ~ '^[0-9]+(\.[0-9]+)?$' then case
+          when trim(s."Rating")::numeric between 0 and 5  then trim(s."Rating")::numeric(3, 2)
+          else null
+        end
+        else null
+      end as rating,
+      case
+        when s."Reviews" is null
+        or trim(s."Reviews") = '' then null
+        when trim(s."Reviews") ~ '^[0-9]+$' then trim(s."Reviews")::bigint
+        else null
+      end as reviews_count,
+      case
+        when s."Size" is null
+        or trim(s."Size") = '' then null
+        when lower(trim(s."Size")) = 'varies with device' then null
+        when trim(s."Size") ~ '^[0-9]+(\.[0-9]+)?[Mm]$' then round(
+          replace(lower(trim(s."Size")), 'm', '')::numeric * 1024 * 1024
+        )::bigint
+        when trim(s."Size") ~ '^[0-9]+(\.[0-9]+)?[Kk]$' then round(
+          replace(lower(trim(s."Size")), 'k', '')::numeric * 1024
+        )::bigint
+        else null
+      end as size_bytes,
+      case
+        when s."Installs" is null
+        or trim(s."Installs") = '' then null
+        when nullif(
+          regexp_replace(trim(s."Installs"), '[^0-9]', '', 'g'),
+          ''
+        ) is not null then nullif(
+          regexp_replace(trim(s."Installs"), '[^0-9]', '', 'g'),
+          ''
+        )::bigint
+        else null
+      end as installs_count,
+      case
+        when s."Price" is null
+        or trim(s."Price") = '' then null
+        when nullif(
+          regexp_replace(trim(s."Price"), '[^0-9\.]', '', 'g'),
+          ''
+        ) is not null then nullif(
+          regexp_replace(trim(s."Price"), '[^0-9\.]', '', 'g'),
+          ''
+        )::numeric(10, 2)
+        else null
+      end as price_usd,
+      case
+        when s."Last Updated" is null
+        or trim(s."Last Updated") = '' then null
+        when trim(s."Last Updated") ~ '^[0-9]{1,2}-[A-Za-z]{3}-[0-9]{2}$' then to_date(trim(s."Last Updated"), 'DD-Mon-YY')
+        else null
+      end as last_updated_date,
+      nullif(trim(s."Current Ver"), '') as current_version,
+      nullif(trim(s."Android Ver"), '') as android_version_text
+    from
+      src s
+  )
+insert into
+  reconciled.app_snapshot (
+    raw_id,
     app_id,
     category_id,
     app_type_id,
     content_rating_id,
-    android_version_id,
     rating,
     reviews_count,
+    size_bytes,
     installs_count,
-    price_amount,
-    size_mb,
-    size_label_raw,
-    current_version,
+    price_usd,
     last_updated_date,
-    raw_id
-)
-SELECT
-    a.app_id,
-    c.category_id,
-    t.app_type_id,
-    cr.content_rating_id,
-    av.android_version_id,
-    cs.rating,
-    cs.reviews_count,
-    cs.installs_count,
-    cs.price_amount,
-    cs.size_mb,
-    cs.size_label_raw,
-    cs.current_version,
-    cs.last_updated_date,
-    cs.raw_id
-FROM clean_source cs
-JOIN app a
-    ON a.app_name_normalized = cs.app_name_normalized
-LEFT JOIN category c
-    ON c.category_name = cs.category_name
-LEFT JOIN app_type t
-    ON t.app_type_name = cs.app_type_name
-LEFT JOIN content_rating cr
-    ON cr.content_rating_name = cs.content_rating_name
-LEFT JOIN android_version av
-    ON av.android_version_label = cs.android_version_label
-ON CONFLICT (raw_id) DO NOTHING;
+    current_version,
+    android_version_text,
+    inserted_at
+  )
+select
+  t.raw_id,
+  a.app_id,
+  c.category_id,
+  atp.app_type_id,
+  cr.content_rating_id,
+  t.rating,
+  t.reviews_count,
+  t.size_bytes,
+  t.installs_count,
+  t.price_usd,
+  t.last_updated_date,
+  t.current_version,
+  t.android_version_text,
+  now()
+from
+  typed t
+  join reconciled.app a on a.app_name_norm = lower(trim(t.app_raw))
+  left join reconciled.category c on c.category_name_norm = lower(trim(t.category_raw))
+  left join reconciled.app_type atp on atp.app_type_name_norm = lower(trim(t.type_raw))
+  left join reconciled.content_rating cr on cr.content_rating_name_norm = lower(trim(t.content_rating_raw));
 
--- =========================================================
--- QUICK TEST
--- =========================================================
-SELECT COUNT(*) AS snapshot_rows
-FROM app_snapshot;
+commit;
