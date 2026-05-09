@@ -1,138 +1,90 @@
 -- =========================================================
--- 03_app_snapshot_etl.sql
--- Project: Google Play Store
--- Purpose:
---   Transform raw rows into typed reconciled snapshot rows.
+-- FILE: 02_domain_load.sql
+-- PROJECT: Google Play Store
+-- PURPOSE:
+--   Populate reconciled domain/master tables from raw.googleplaystore_import
+--   Safe to rerun after 01_reconciled_schema.sql
 -- =========================================================
+
 begin;
 
-delete from reconciled.app_snapshot;
+-- =========================================================
+-- CATEGORY
+-- =========================================================
+insert into reconciled.category (
+    category_name,
+    category_name_norm
+)
+select distinct
+    trim(r."Category") as category_name,
+    lower(trim(r."Category")) as category_name_norm
+from raw.googleplaystore_import r
+where r."Category" is not null
+  and trim(r."Category") <> ''
+  and trim(r."Category") <> '1.9'
+on conflict (category_name_norm) do nothing;
 
-with
-  src as (
-    select
-      r.raw_id,
-      r."App",
-      r."Category",
-      r."Rating",
-      r."Reviews",
-      r."Size",
-      r."Installs",
-      r."Type",
-      r."Price",
-      r."Content Rating",
-      r."Last Updated",
-      r."Current Ver",
-      r."Android Ver"
-    from
-      raw.googleplaystore_import r
-  ),
-  typed as (
-    select
-      s.raw_id,
-      s."App" as app_raw,
-      s."Category" as category_raw,
-      s."Type" as type_raw,
-      s."Content Rating" as content_rating_raw,
-      case
-        when s."Rating" is null
-        or trim(s."Rating") = '' then null
-        when trim(s."Rating") ~ '^[0-9]+(\.[0-9]+)?$' then case
-          when trim(s."Rating")::numeric between 0 and 5  then trim(s."Rating")::numeric(3, 2)
-          else null
-        end
-        else null
-      end as rating,
-      case
-        when s."Reviews" is null
-        or trim(s."Reviews") = '' then null
-        when trim(s."Reviews") ~ '^[0-9]+$' then trim(s."Reviews")::bigint
-        else null
-      end as reviews_count,
-      case
-        when s."Size" is null
-        or trim(s."Size") = '' then null
-        when lower(trim(s."Size")) = 'varies with device' then null
-        when trim(s."Size") ~ '^[0-9]+(\.[0-9]+)?[Mm]$' then round(
-          replace(lower(trim(s."Size")), 'm', '')::numeric * 1024 * 1024
-        )::bigint
-        when trim(s."Size") ~ '^[0-9]+(\.[0-9]+)?[Kk]$' then round(
-          replace(lower(trim(s."Size")), 'k', '')::numeric * 1024
-        )::bigint
-        else null
-      end as size_bytes,
-      case
-        when s."Installs" is null
-        or trim(s."Installs") = '' then null
-        when nullif(
-          regexp_replace(trim(s."Installs"), '[^0-9]', '', 'g'),
-          ''
-        ) is not null then nullif(
-          regexp_replace(trim(s."Installs"), '[^0-9]', '', 'g'),
-          ''
-        )::bigint
-        else null
-      end as installs_count,
-      case
-        when s."Price" is null
-        or trim(s."Price") = '' then null
-        when nullif(
-          regexp_replace(trim(s."Price"), '[^0-9\.]', '', 'g'),
-          ''
-        ) is not null then nullif(
-          regexp_replace(trim(s."Price"), '[^0-9\.]', '', 'g'),
-          ''
-        )::numeric(10, 2)
-        else null
-      end as price_usd,
-      case
-        when s."Last Updated" is null
-        or trim(s."Last Updated") = '' then null
-        when trim(s."Last Updated") ~ '^[0-9]{1,2}-[A-Za-z]{3}-[0-9]{2}$' then to_date(trim(s."Last Updated"), 'DD-Mon-YY')
-        else null
-      end as last_updated_date,
-      nullif(trim(s."Current Ver"), '') as current_version,
-      nullif(trim(s."Android Ver"), '') as android_version_text
-    from
-      src s
-  )
-insert into
-  reconciled.app_snapshot (
-    raw_id,
-    app_id,
-    category_id,
-    app_type_id,
-    content_rating_id,
-    rating,
-    reviews_count,
-    size_bytes,
-    installs_count,
-    price_usd,
-    last_updated_date,
-    current_version,
-    android_version_text,
-    inserted_at
-  )
-select
-  t.raw_id,
-  a.app_id,
-  c.category_id,
-  atp.app_type_id,
-  cr.content_rating_id,
-  t.rating,
-  t.reviews_count,
-  t.size_bytes,
-  t.installs_count,
-  t.price_usd,
-  t.last_updated_date,
-  t.current_version,
-  t.android_version_text,
-  now()
-from
-  typed t
-  join reconciled.app a on a.app_name_norm = lower(trim(t.app_raw))
-  left join reconciled.category c on c.category_name_norm = lower(trim(t.category_raw))
-  left join reconciled.app_type atp on atp.app_type_name_norm = lower(trim(t.type_raw))
-  left join reconciled.content_rating cr on cr.content_rating_name_norm = lower(trim(t.content_rating_raw));
+-- =========================================================
+-- APP TYPE
+-- =========================================================
+insert into reconciled.app_type (
+    app_type_name,
+    app_type_name_norm
+)
+select distinct
+    trim(r."Type") as app_type_name,
+    lower(trim(r."Type")) as app_type_name_norm
+from raw.googleplaystore_import r
+where r."Type" is not null
+  and trim(r."Type") <> ''
+  and trim(r."Type") <> '0'
+on conflict (app_type_name_norm) do nothing;
+
+-- =========================================================
+-- CONTENT RATING
+-- =========================================================
+insert into reconciled.content_rating (
+    content_rating_name,
+    content_rating_name_norm
+)
+select distinct
+    trim(r."Content Rating") as content_rating_name,
+    lower(trim(r."Content Rating")) as content_rating_name_norm
+from raw.googleplaystore_import r
+where r."Content Rating" is not null
+  and trim(r."Content Rating") <> ''
+  and trim(r."Content Rating") <> '0'
+on conflict (content_rating_name_norm) do nothing;
+
+-- =========================================================
+-- APP
+-- =========================================================
+insert into reconciled.app (
+    app_name,
+    app_name_norm
+)
+select distinct
+    trim(r."App") as app_name,
+    lower(trim(r."App")) as app_name_norm
+from raw.googleplaystore_import r
+where r."App" is not null
+  and trim(r."App") <> ''
+  and trim(r."App") <> 'Life Made WI-Fi Touchscreen Photo Frame'
+on conflict (app_name_norm) do nothing;
+
+-- =========================================================
+-- QUICK TEST
+-- =========================================================
+select 'category_rows' as metric, count(*)::text as value
+from reconciled.category
+union all
+select 'app_type_rows' as metric, count(*)::text as value
+from reconciled.app_type
+union all
+select 'content_rating_rows' as metric, count(*)::text as value
+from reconciled.content_rating
+union all
+select 'app_rows' as metric, count(*)::text as value
+from reconciled.app;
 
 commit;
