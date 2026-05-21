@@ -1,16 +1,27 @@
-# Google Play Store Data Warehouse Project
+# Google Play Store Data Warehouse 🏛️📊
 
-## Project goal
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Supabase-3ECF8E?style=flat-square&logo=postgresql&logoColor=white)
+![Data Warehouse](https://img.shields.io/badge/Data%20Warehouse-Star%20Schema-8A2BE2?style=flat-square)
+
+
+> Transforming Google Play Store raw data into a verified, auditable, OLAP-ready data warehouse.
+
 This project builds a data warehouse for the Google Play Store dataset. It starts from the original CSV, loads it into a raw landing table, transforms it into a reconciled PostgreSQL schema, performs baseline data quality assessment, creates a conservative cleaning and audit layer, and finally loads a dimensional star schema for OLAP-style analysis.
 
 The analytical grain is **one app snapshot**: one row in `reconciled.app_snapshot` / `dw.fact_app_snapshot` represents one loaded Google Play Store source row for one application snapshot.
 
-## Tech stack
-- Supabase / PostgreSQL
-- Python
-- LaTeX, for report writing
+---
 
-## Dataset
+## 🧰 Tech Stack
+
+- **Supabase / PostgreSQL**
+- **Python**, optional for analysis/report support
+- **LaTeX**, for report writing
+
+---
+
+## 📦 Dataset
+
 Source file:
 
 - `data/raw/googleplaystore.csv`
@@ -19,17 +30,22 @@ Import target table:
 
 - `raw.googleplaystore_import`
 
-Important import note: `01_reconciled_schema.sql` creates the raw landing table with column names matching the original CSV headers exactly, so the CSV should be imported into `raw.googleplaystore_import` after running that script.
+> **Import note:** `01_reconciled_schema.sql` creates the raw landing table with column names matching the original CSV headers exactly, so the CSV should be imported into `raw.googleplaystore_import` after running that script.
 
-## Current project structure
+---
+
+## 🗂️ Current Project Structure
+
 - `data/`: raw, intermediate, and processed data files
 - `sql/`: schema, ETL, DQA, cleaning, DW, and verification scripts
 - `report/`: LaTeX project report
 - `docs/`: notes, decisions, progress log, and supporting documentation
 
-## SQL pipeline overview
+---
 
-### Phase 1 — Reconciled schema and source ETL
+## 🧭 SQL Pipeline Overview
+
+### 🧱 Phase 1 — Reconciled Schema and Source ETL
 
 | Order | File | Purpose |
 |---:|---|---|
@@ -40,7 +56,7 @@ Important import note: `01_reconciled_schema.sql` creates the raw landing table 
 | 5 | `sql/04_genre_etl.sql` | Extracts valid genres from the multi-valued `Genres` source column and loads the many-to-many bridge `reconciled.app_snapshot_genre`. |
 | 6 | `sql/verifyPhase1.sql` | Verification script for Phase 1 counts, malformed row exclusion, FK nulls, measure validity, genre bridge integrity, and expected Phase 1 evidence. |
 
-### Phase 2 — DQA, cleaning, and DW loading
+### 🧼 Phase 2 — DQA, Cleaning, and DW Loading
 
 | Order | File | Purpose |
 |---:|---|---|
@@ -50,7 +66,9 @@ Important import note: `01_reconciled_schema.sql` creates the raw landing table 
 | 10 | `sql/08_dw_etl.sql` | Loads dimensions, fact, date dimension, genre bridge, and DW summary/integrity views from the clean/reconciled layer. |
 | 11 | `sql/verifyPhase2.sql` | Verification script for Phase 2 counts, cleaning flags, audit rows, bridge weights, FK integrity, weighted genre aggregation, and expected empty failure sets. |
 
-## Full execution order
+---
+
+## 🚀 Full Execution Order
 
 Run these steps in Supabase/PostgreSQL:
 
@@ -66,10 +84,13 @@ Run these steps in Supabase/PostgreSQL:
 10. Run `sql/08_dw_etl.sql`.
 11. Run `sql/verifyPhase2.sql` and save outputs as Phase 2 evidence.
 
-## Database layers
+---
 
-### Raw layer
-Schema: `raw`
+## 🏗️ Database Layers
+
+### 🥫 Raw Layer
+
+**Schema:** `raw`
 
 Main table:
 
@@ -81,8 +102,9 @@ Purpose:
 - Keep source headers unchanged for easier Supabase CSV import.
 - Preserve the malformed shifted row in raw data for lineage and auditability.
 
-### Reconciled layer
-Schema: `reconciled`
+### 🔁 Reconciled Layer
+
+**Schema:** `reconciled`
 
 Main tables:
 
@@ -101,8 +123,9 @@ Purpose:
 - Store typed numeric measures such as `rating`, `reviews_count`, `size_bytes`, `installs_count`, and `price_usd`.
 - Represent `Genres` as a many-to-many relationship through `reconciled.app_snapshot_genre`.
 
-### Data quality layer
-Schema: `dq`
+### 🔍 Data Quality Layer
+
+**Schema:** `dq`
 
 Main views:
 
@@ -117,8 +140,9 @@ Purpose:
 - Produce evidence for completeness, uniqueness, validity, consistency, timeliness, and accuracy limitations.
 - Identify rows that need flags or review.
 
-### Clean/audit layer
-Schema: `clean`
+### 🧽 Clean / Audit Layer
+
+**Schema:** `clean`
 
 Main tables/views:
 
@@ -136,8 +160,9 @@ Cleaning strategy:
 - Log cleaning and flagging decisions in `clean.cleaning_audit_log`.
 - Add bridge weights for safe genre analysis.
 
-### Data warehouse layer
-Schema: `dw`
+### ⭐ Data Warehouse Layer
+
+**Schema:** `dw`
 
 Dimensions:
 
@@ -160,7 +185,9 @@ Purpose:
 - Preserve Phase 2 DQ flags in the fact table so BI users can filter or explain missing/flagged values.
 - Use weighted genre bridge rows to avoid double counting when analyzing by genre.
 
-## Reconciled and DW grain
+---
+
+## 🎯 Reconciled and DW Grain
 
 The central grain is:
 
@@ -174,11 +201,13 @@ In Phase 1:
 
 The excluded row is the shifted malformed record for `Life Made WI-Fi Touchscreen Photo Frame`. It remains preserved in `raw.googleplaystore_import` but is not loaded into `reconciled.app_snapshot`.
 
-## Key expected counts
+---
+
+## ✅ Key Expected Counts
 
 These counts are based on the provided Google Play Store CSV and are used by the verification scripts.
 
-### Phase 1 expected counts
+### Phase 1 Expected Counts
 
 | Object / metric | Expected count |
 |---|---:|
@@ -194,7 +223,7 @@ These counts are based on the provided Google Play Store CSV and are used by the
 | snapshots with genre | 10840 |
 | orphan bridge rows | 0 |
 
-### Phase 2 expected counts
+### Phase 2 Expected Counts
 
 | Object / metric | Expected count |
 |---|---:|
@@ -208,9 +237,11 @@ These counts are based on the provided Google Play Store CSV and are used by the
 | `dw.dim_content_rating` | 6 |
 | `dw.dim_genre` | 53 |
 
-`dw.dim_app_type` has 3 rows because the DW adds a technical `Unknown` member to handle the one snapshot with missing app type while avoiding NULL foreign keys in the fact table.
+> `dw.dim_app_type` has 3 rows because the DW adds a technical `Unknown` member to handle the one snapshot with missing app type while avoiding NULL foreign keys in the fact table.
 
-## Important data quality decisions
+---
+
+## 🛡️ Important Data Quality Decisions
 
 - Rating NULLs are preserved because missing ratings are analytically meaningful and should not be blindly imputed.
 - Size NULLs are preserved because source values such as `Varies with device` are meaningful, not simple errors.
@@ -219,7 +250,9 @@ These counts are based on the provided Google Play Store CSV and are used by the
 - Accuracy is documented as not fully scored because there is no external reference truth for the Google Play Store values.
 - Genre is many-to-many, so direct joins can double count snapshots and measures. Use the weighted bridge or provided analysis views for genre-based KPIs.
 
-## Genre bridge and weighted analysis
+---
+
+## 🌉 Genre Bridge and Weighted Analysis
 
 The source `Genres` field can contain multiple genres separated by `;`. The project models this using bridge tables:
 
@@ -234,7 +267,9 @@ In the clean and DW layers, each bridge row includes a `weight`:
 
 This prevents double counting in genre analysis. For genre-level KPIs, use the provided weighted genre views instead of directly summing fact measures after joining to the genre bridge.
 
-## Verification scripts
+---
+
+## 🧪 Verification Scripts
 
 Use these scripts to capture evidence for the report:
 
@@ -248,7 +283,9 @@ Use these scripts to capture evidence for the report:
 - after-cleaning scorecard non-green metrics
 - DW integrity failures
 
-## Notes
+---
+
+## 📝 Notes
 
 - Scripts are designed to be rerunnable from a clean state.
 - `01_reconciled_schema.sql` drops and recreates `raw` and `reconciled`.
