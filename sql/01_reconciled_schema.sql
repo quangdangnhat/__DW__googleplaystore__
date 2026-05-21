@@ -204,7 +204,7 @@ comment on table reconciled.app_snapshot_genre is
 -- 5) HELPFUL INDEXES
 -- =========================================================
 
-create index idx_raw_googleplaystore_app
+create index idx_raw_googleplaystore_app 
     on raw.googleplaystore_import ("App");
 
 create index idx_raw_googleplaystore_category

@@ -72,19 +72,4 @@ where r."App" is not null
   and trim(r."App") <> 'Life Made WI-Fi Touchscreen Photo Frame'
 on conflict (app_name_norm) do nothing;
 
--- =========================================================
--- QUICK TEST
--- =========================================================
-select 'category_rows' as metric, count(*)::text as value
-from reconciled.category
-union all
-select 'app_type_rows' as metric, count(*)::text as value
-from reconciled.app_type
-union all
-select 'content_rating_rows' as metric, count(*)::text as value
-from reconciled.content_rating
-union all
-select 'app_rows' as metric, count(*)::text as value
-from reconciled.app;
-
 commit;
