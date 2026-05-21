@@ -1,0 +1,54 @@
+genre_key,genre_id,genre_name,genre_name_norm,inserted_at
+1,1,Maps & Navigation,maps & navigation,2026-05-09 20:49:58.217644+00
+2,2,Communication,communication,2026-05-09 20:49:58.217644+00
+3,3,Events,events,2026-05-09 20:49:58.217644+00
+4,4,Shopping,shopping,2026-05-09 20:49:58.217644+00
+5,5,Medical,medical,2026-05-09 20:49:58.217644+00
+6,6,Tools,tools,2026-05-09 20:49:58.217644+00
+7,7,Casual,casual,2026-05-09 20:49:58.217644+00
+8,8,Libraries & Demo,libraries & demo,2026-05-09 20:49:58.217644+00
+9,9,Role Playing,role playing,2026-05-09 20:49:58.217644+00
+10,10,Music & Video,music & video,2026-05-09 20:49:58.217644+00
+11,11,Education,education,2026-05-09 20:49:58.217644+00
+12,12,Pretend Play,pretend play,2026-05-09 20:49:58.217644+00
+13,13,Sports,sports,2026-05-09 20:49:58.217644+00
+14,14,Books & Reference,books & reference,2026-05-09 20:49:58.217644+00
+15,15,Comics,comics,2026-05-09 20:49:58.217644+00
+16,16,Word,word,2026-05-09 20:49:58.217644+00
+17,17,Action,action,2026-05-09 20:49:58.217644+00
+18,18,Art & Design,art & design,2026-05-09 20:49:58.217644+00
+19,19,Racing,racing,2026-05-09 20:49:58.217644+00
+20,20,Finance,finance,2026-05-09 20:49:58.217644+00
+21,21,Action & Adventure,action & adventure,2026-05-09 20:49:58.217644+00
+22,22,Travel & Local,travel & local,2026-05-09 20:49:58.217644+00
+23,23,News & Magazines,news & magazines,2026-05-09 20:49:58.217644+00
+24,24,Business,business,2026-05-09 20:49:58.217644+00
+25,25,Personalization,personalization,2026-05-09 20:49:58.217644+00
+26,26,Adventure,adventure,2026-05-09 20:49:58.217644+00
+27,27,Productivity,productivity,2026-05-09 20:49:58.217644+00
+28,28,Photography,photography,2026-05-09 20:49:58.217644+00
+29,29,Entertainment,entertainment,2026-05-09 20:49:58.217644+00
+30,30,Simulation,simulation,2026-05-09 20:49:58.217644+00
+31,31,Parenting,parenting,2026-05-09 20:49:58.217644+00
+32,32,Beauty,beauty,2026-05-09 20:49:58.217644+00
+33,33,Lifestyle,lifestyle,2026-05-09 20:49:58.217644+00
+34,34,Creativity,creativity,2026-05-09 20:49:58.217644+00
+35,35,Board,board,2026-05-09 20:49:58.217644+00
+36,36,Auto & Vehicles,auto & vehicles,2026-05-09 20:49:58.217644+00
+37,37,Weather,weather,2026-05-09 20:49:58.217644+00
+38,38,Card,card,2026-05-09 20:49:58.217644+00
+39,39,Casino,casino,2026-05-09 20:49:58.217644+00
+40,40,Educational,educational,2026-05-09 20:49:58.217644+00
+41,41,Strategy,strategy,2026-05-09 20:49:58.217644+00
+42,42,Dating,dating,2026-05-09 20:49:58.217644+00
+43,43,Arcade,arcade,2026-05-09 20:49:58.217644+00
+44,44,Health & Fitness,health & fitness,2026-05-09 20:49:58.217644+00
+45,45,Trivia,trivia,2026-05-09 20:49:58.217644+00
+46,46,Puzzle,puzzle,2026-05-09 20:49:58.217644+00
+47,47,Brain Games,brain games,2026-05-09 20:49:58.217644+00
+48,48,Social,social,2026-05-09 20:49:58.217644+00
+49,49,Video Players & Editors,video players & editors,2026-05-09 20:49:58.217644+00
+50,50,Music,music,2026-05-09 20:49:58.217644+00
+51,51,Music & Audio,music & audio,2026-05-09 20:49:58.217644+00
+52,52,House & Home,house & home,2026-05-09 20:49:58.217644+00
+53,53,Food & Drink,food & drink,2026-05-09 20:49:58.217644+00

@@ -1,0 +1,6 @@
+check_name,expected_value,actual_value,status
+fact_rows_match_clean_rows,10840,10840,PASS
+bridge_rows_match_clean_bridge_rows,11288,11288,PASS
+genre_bridge_weight_errors,0,0,PASS
+fact_duplicate_snapshot_id,0,0,PASS
+fact_error_review_rows,0,0,PASS

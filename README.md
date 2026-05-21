@@ -26,10 +26,6 @@ Source file:
 
 - `data/raw/googleplaystore.csv`
 
-Import target table:
-
-- `raw.googleplaystore_import`
-
 > **Import note:** `01_reconciled_schema.sql` creates the raw landing table with column names matching the original CSV headers exactly, so the CSV should be imported into `raw.googleplaystore_import` after running that script.
 
 ---

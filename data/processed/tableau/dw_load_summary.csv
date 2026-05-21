@@ -1,0 +1,13 @@
+metric,value
+dim_app_rows,9638
+dim_category_rows,33
+dim_app_type_rows,3
+dim_content_rating_rows,6
+dim_last_updated_date_rows,1377
+dim_genre_rows,53
+fact_app_snapshot_rows,10840
+bridge_app_snapshot_genre_rows,11288
+unknown_app_type_fact_rows,1
+fact_rating_missing_flag_rows,1474
+fact_size_missing_flag_rows,1695
+fact_multiple_genre_flag_rows,448

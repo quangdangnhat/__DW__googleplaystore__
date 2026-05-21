@@ -1,0 +1,17 @@
+metric,value
+clean_app_snapshot_rows,10840
+clean_bridge_rows,11288
+audit_log_rows,3628
+rating_missing_flag_rows,1474
+size_missing_flag_rows,1695
+size_varies_with_device_flag_rows,1695
+app_type_missing_flag_rows,1
+current_version_missing_flag_rows,8
+android_version_missing_flag_rows,2
+type_price_conflict_flag_rows,0
+invalid_measure_flag_rows,0
+genre_missing_flag_rows,0
+multiple_genre_flag_rows,448
+dq_status_ok_rows,7347
+dq_status_flagged_ok_rows,3493
+dq_status_error_review_rows,0

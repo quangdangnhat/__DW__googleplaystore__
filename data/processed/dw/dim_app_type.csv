@@ -1,0 +1,4 @@
+app_type_key,app_type_id,app_type_name,app_type_name_norm,inserted_at
+1,1,Paid,paid,2026-05-09 20:49:58.217644+00
+2,2,Free,free,2026-05-09 20:49:58.217644+00
+3,null,Unknown,unknown,2026-05-09 20:49:58.217644+00

@@ -1,0 +1,9 @@
+dimension,metric,total_checked,issue_count,score,severity,details
+Completeness Management,rating_missing_values_are_flagged,10840,0,1.0000,GREEN,All NULL ratings must be explicitly flagged.
+Completeness Management,size_missing_values_are_flagged,10840,0,1.0000,GREEN,All NULL size values must be explicitly flagged.
+Completeness Management,app_type_missing_values_are_flagged,10840,0,1.0000,GREEN,All missing app type values must be explicitly flagged.
+Validity,invalid_measures_remaining,10840,0,1.0000,GREEN,Invalid typed measures should not exist after the reconciled ETL.
+Consistency,type_price_conflicts_remaining,10840,0,1.0000,GREEN,Free/Paid type should be consistent with price.
+Consistency,genre_missing_remaining,10840,0,1.0000,GREEN,Every app snapshot should have at least one genre.
+Many-to-Many Integrity,genre_bridge_weight_errors,10840,0,1.0000,GREEN,"For each snapshot, the sum of Genre bridge weights must be equal to 1."
+Reconciliation,clean_rows_match_reconciled_rows,1,0,1.0000,GREEN,Clean layer should preserve the reconciled snapshot grain.

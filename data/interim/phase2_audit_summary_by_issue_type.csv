@@ -1,0 +1,7 @@
+issue_type,action,row_count
+size_varies_with_device,PRESERVE_AND_FLAG,1695
+rating_missing,PRESERVE_AND_FLAG,1474
+multiple_genre_membership,PRESERVE_AND_USE_WEIGHTED_BRIDGE,448
+current_version_missing,STANDARDIZE_NULL_AND_FLAG,8
+android_version_missing,STANDARDIZE_NULL_AND_FLAG,2
+app_type_missing,PRESERVE_AND_FLAG,1
