@@ -7,3 +7,12 @@ __pycache__/
 *.synctex.gz
 .env
 .DS_Store
+# Supabase local/config folder
+supabase/
+
+# Node dependencies
+node_modules/
+
+# Node package files
+package.json
+package-lock.json
