@@ -1,0 +1,18 @@
+__pycache__/
+.ipynb_checkpoints/
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+.env
+.DS_Store
+# Supabase local/config folder
+supabase/
+
+# Node dependencies
+node_modules/
+
+# Node package files
+package.json
+package-lock.json
