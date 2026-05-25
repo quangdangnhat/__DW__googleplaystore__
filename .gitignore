@@ -16,3 +16,5 @@ node_modules/
 # Node package files
 package.json
 package-lock.json
+
+data/processed.zip
