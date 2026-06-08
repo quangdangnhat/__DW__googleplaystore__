@@ -1,4 +1,4 @@
-# Google Play Store Data Warehouse 🏛️📊
+# Google Play Store Data Warehouse 
 
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Supabase-3ECF8E?style=flat-square&logo=postgresql&logoColor=white)
 ![Data Warehouse](https://img.shields.io/badge/Data%20Warehouse-Star%20Schema-8A2BE2?style=flat-square)
@@ -16,14 +16,14 @@ The analytical grain is **one app snapshot**: one row in `reconciled.app_snapsho
 
 ---
 
-## 🧰 Tech Stack
+## Tech Stack
 
 - **Supabase / PostgreSQL**
 - **LaTeX**, for report writing
 
 ---
 
-## 📦 Dataset
+## Dataset
 
 Source file:
 
@@ -33,7 +33,7 @@ Source file:
 
 ---
 
-## 🗂️ Current Project Structure
+## Current Project Structure
 
 - `data/`: raw, intermediate, and processed data files
 - `sql/`: schema, ETL, DQA, cleaning, DW, and verification scripts
@@ -42,9 +42,9 @@ Source file:
 
 ---
 
-## 🧭 SQL Pipeline Overview
+## SQL Pipeline Overview
 
-### 🧱 Implementation Stage A — Raw and Reconciled Database Build
+### Implementation Stage A — Raw and Reconciled Database Build
 
 | Order | File | Purpose |
 |---:|---|---|
@@ -55,7 +55,7 @@ Source file:
 | 5 | `sql/04_genre_etl.sql` | Extracts valid genres from the multi-valued `Genres` source column and loads the many-to-many bridge `reconciled.app_snapshot_genre`. |
 | 6 | `sql/verifyPhase1.sql` | Verification script for Phase 1 counts, malformed row exclusion, FK nulls, measure validity, genre bridge integrity, and expected Phase 1 evidence. |
 
-### 🧼 Implementation Stage B — DQA, Cleaning, Audit, and DW Loading
+### Implementation Stage B — DQA, Cleaning, Audit, and DW Loading
 
 | Order | File | Purpose |
 |---:|---|---|
@@ -67,7 +67,7 @@ Source file:
 
 ---
 
-## 🚀 Full Execution Order
+## Full Execution Order
 
 Run these steps in Supabase/PostgreSQL:
 
@@ -85,9 +85,9 @@ Run these steps in Supabase/PostgreSQL:
 
 ---
 
-## 🏗️ Database Layers
+## Database Layers
 
-### 🥫 Raw Layer
+### Raw Layer
 
 **Schema:** `raw`
 
@@ -101,7 +101,7 @@ Purpose:
 - Keep source headers unchanged for easier Supabase CSV import.
 - Preserve the malformed shifted row in raw data for lineage and auditability.
 
-### 🔁 Reconciled Layer
+### Reconciled Layer
 
 **Schema:** `reconciled`
 
@@ -122,7 +122,7 @@ Purpose:
 - Store typed numeric measures such as `rating`, `reviews_count`, `size_bytes`, `installs_count`, and `price_usd`.
 - Represent `Genres` as a many-to-many relationship through `reconciled.app_snapshot_genre`.
 
-### 🔍 Data Quality Layer
+### Data Quality Layer
 
 **Schema:** `dq`
 
@@ -139,7 +139,7 @@ Purpose:
 - Produce evidence for completeness, uniqueness, validity, consistency, timeliness, and accuracy limitations.
 - Identify rows that need flags or review.
 
-### 🧽 Clean / Audit Layer
+### Clean / Audit Layer
 
 **Schema:** `clean`
 
@@ -159,7 +159,7 @@ Cleaning strategy:
 - Log cleaning and flagging decisions in `clean.cleaning_audit_log`.
 - Add bridge weights for safe genre analysis.
 
-### ⭐ Data Warehouse Layer
+### Data Warehouse Layer
 
 **Schema:** `dw`
 
@@ -186,7 +186,7 @@ Purpose:
 
 ---
 
-## 🎯 Reconciled and DW Grain
+## Reconciled and DW Grain
 
 The central grain is:
 
@@ -202,7 +202,7 @@ The excluded row is the shifted malformed record for `Life Made WI-Fi Touchscree
 
 ---
 
-## ✅ Key Expected Counts
+## Key Expected Counts
 
 These counts are based on the provided Google Play Store CSV and are used by the verification scripts.
 
@@ -251,7 +251,7 @@ These counts are based on the provided Google Play Store CSV and are used by the
 
 ---
 
-## 🌉 Genre Bridge and Weighted Analysis
+## Genre Bridge and Weighted Analysis
 
 The source `Genres` field can contain multiple genres separated by `;`. The project models this using bridge tables:
 
@@ -268,7 +268,7 @@ This prevents double counting in genre analysis. For genre-level KPIs, use the p
 
 ---
 
-## 🧪 Verification Scripts
+## Verification Scripts
 
 Use these scripts to capture evidence for the report:
 
@@ -284,7 +284,7 @@ Use these scripts to capture evidence for the report:
 
 ---
 
-## 📝 Notes
+## Notes
 
 - Scripts are designed to be rerunnable from a clean state.
 - `01_reconciled_schema.sql` drops and recreates `raw` and `reconciled`.
