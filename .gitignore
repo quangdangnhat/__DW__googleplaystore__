@@ -17,4 +17,11 @@ node_modules/
 package.json
 package-lock.json
 
+reports\phase1_phase2_report.aux
+reports\phase1_phase2_report.fdb_latexmk
+reports\phase1_phase2_report.fls
+reports\phase1_phase2_report.log
+reports\phase1_phase2_report.out
+reports\phase1_phase2_report.synctex.gz
+
 data/processed.zip
