@@ -5,17 +5,20 @@
 
 
 > Transforming Google Play Store raw data into a verified, auditable, OLAP-ready data warehouse.
+> Repository scope: this repository contains the database design, SQL implementation,
+> data quality, cleaning, audit, ETL, and verification artifacts for Phase 1 and Phase 2.
+> Phase 3 Tableau dashboards and presentation materials are maintained separately.
 
 This project builds a data warehouse for the Google Play Store dataset. It starts from the original CSV, loads it into a raw landing table, transforms it into a reconciled PostgreSQL schema, performs baseline data quality assessment, creates a conservative cleaning and audit layer, and finally loads a dimensional star schema for OLAP-style analysis.
 
 The analytical grain is **one app snapshot**: one row in `reconciled.app_snapshot` / `dw.fact_app_snapshot` represents one loaded Google Play Store source row for one application snapshot.
+
 
 ---
 
 ## 🧰 Tech Stack
 
 - **Supabase / PostgreSQL**
-- **Python**, optional for analysis/report support
 - **LaTeX**, for report writing
 
 ---
@@ -41,7 +44,7 @@ Source file:
 
 ## 🧭 SQL Pipeline Overview
 
-### 🧱 Phase 1 — Reconciled Schema and Source ETL
+### 🧱 Implementation Stage A — Raw and Reconciled Database Build
 
 | Order | File | Purpose |
 |---:|---|---|
@@ -52,7 +55,7 @@ Source file:
 | 5 | `sql/04_genre_etl.sql` | Extracts valid genres from the multi-valued `Genres` source column and loads the many-to-many bridge `reconciled.app_snapshot_genre`. |
 | 6 | `sql/verifyPhase1.sql` | Verification script for Phase 1 counts, malformed row exclusion, FK nulls, measure validity, genre bridge integrity, and expected Phase 1 evidence. |
 
-### 🧼 Phase 2 — DQA, Cleaning, and DW Loading
+### 🧼 Implementation Stage B — DQA, Cleaning, Audit, and DW Loading
 
 | Order | File | Purpose |
 |---:|---|---|

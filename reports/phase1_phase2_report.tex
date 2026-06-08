@@ -14,14 +14,16 @@
 \usepackage{float}
 \usepackage{amsmath}
 \usepackage{caption}
-
-\hypersetup{
-    colorlinks=true,
-    linkcolor=black,
-    urlcolor=blue,
-    citecolor=black
-}
-
+\usepackage[colorlinks=true,
+            linkcolor=blue,
+            citecolor=blue,
+            urlcolor=blue]{hyperref}
+% \hypersetup{
+%     colorlinks=true,
+%     linkcolor=black,
+%     urlcolor=blue,
+%     citecolor=black
+% }
 \captionsetup{font=small}
 \renewcommand{\arraystretch}{1.15}
 
@@ -34,6 +36,8 @@
 
 \begin{document}
 \maketitle
+
+GitHub: \url{https://github.com/quangdangnhat/__DW__googleplaystore__}
 
 \section{Introduction}
 This report presents the first two phases of the Google Play Store data warehouse project. Phase 1 focuses on the conceptual and logical design of the data mart. Starting from the reconciled relational schema, we identify the fact of interest, build and edit the attribute tree, define dimensions and measures, derive the Dimensional Fact Model (DFM) schema, and translate the conceptual schema into a logical star schema for ROLAP analysis.
@@ -63,7 +67,7 @@ The goal of the data mart is to support exploratory and aggregate analysis of th
     \item how genre-based analyses can be performed despite the many-to-many relationship with app snapshots.
 \end{itemize}
 
-These requirements motivate the choice of a snapshot-oriented fact and a star schema suitable for OLAP-style aggregation and slicing.
+These requirements motivate the choice of a snapshot-oriented fact and a star schema suitable for OLAP-style aggregation and slicing. These requirements also support the Phase 3 visualization story, which investigates whether Google Play Store reach is driven more by perfect ratings or by a combination of good-enough quality, free access, category position, and recent updates.
 
 \section{Reconciled Source Schema and Data-Driven Design Approach}
 
@@ -145,11 +149,11 @@ The technical identifiers of related tables are replaced by business dimensions 
 \end{itemize}
 
 \paragraph{Time dimension.}
-The business attribute \texttt{last\_updated\_date} is transformed into the temporal dimension \texttt{Date}. The day-level member is the full calendar date, which can be rolled up to month and year:
+The business attribute \texttt{last\_updated\_date} is transformed into the temporal dimension \texttt{Date}. The day-level member is the full calendar date, which can be rolled up to month, quarter and year:
 \[
-\texttt{full\_date} \rightarrow \texttt{month} \rightarrow \texttt{year}
+\texttt{full\_date} \rightarrow \texttt{month} \rightarrow \texttt{quarter} \rightarrow \texttt{year}
 \]
-In the logical schema, the attribute \texttt{day} is stored as the day-of-month descriptor of \texttt{full\_date}; it is not interpreted as an independent determinant of month and year.
+In the logical schema, the attribute \texttt{day} is stored as the day-of-month descriptor of \texttt{full\_date}; it is not interpreted as an independent determinant of month and year. The quarter level is included to support OLAP roll-up and drill-down operations in the Phase 3 dashboards.
 
 \paragraph{Advanced construct.}
 The association with \texttt{Genre} is reintroduced at the conceptual level as a multiple arc. This modeling choice is required because the reconciled schema shows that the same app snapshot may be associated with more than one genre.
@@ -185,7 +189,7 @@ The final conceptual schema is centered on the fact \texttt{APP\_SNAPSHOT}. The 
     \item \texttt{Category} $\rightarrow$ \texttt{category\_name}
     \item \texttt{App Type} $\rightarrow$ \texttt{app\_type\_name}
     \item \texttt{Content Rating} $\rightarrow$ \texttt{content\_rating\_name}
-    \item \texttt{Date}: \texttt{full\_date} $\rightarrow$ \texttt{month} $\rightarrow$ \texttt{year}; the logical attribute \texttt{day} represents the day of month
+    \item \texttt{Date}: \texttt{full\_date} $\rightarrow$ \texttt{month}  $\rightarrow$ \texttt{quarter} $\rightarrow$ \texttt{year}; the logical attribute \texttt{day} represents the day of month
 \end{itemize}
 
 The measures are \texttt{rating}, \texttt{reviews\_count}, \texttt{installs\_count}, \texttt{price\_usd}, and \texttt{size\_bytes}.
@@ -296,6 +300,7 @@ Table~\ref{tab:measure_glossary} provides a glossary of the measures used in the
     \centering
     \includegraphics[width=0.9\textwidth]{./figures/starSchema.png}
     \caption{Implemented data warehouse star schema in Supabase PostgreSQL. The schema extends the logical star schema with data quality flags and a weighted bridge table for the many-to-many relationship with Genre.}
+
     \label{fig:logical_schema}
 \end{figure}
 
@@ -527,7 +532,7 @@ The data warehouse therefore preserves the clean-layer grain, maintains referent
 \subsection{Analysis Views for OLAP and BI}
 To support correct analysis and reduce the risk of wrong aggregations, several views are created in the data warehouse schema. The most important one is \texttt{dw.v\_genre\_fractional\_analysis}, which exposes weighted measures such as \texttt{weighted\_reviews\_count}, \texttt{weighted\_installs\_count}, and \texttt{weighted\_snapshot\_count}. These fields should be used when aggregating by \texttt{Genre}.
 
-The view \texttt{dw.v\_genre\_membership\_analysis} supports tag-based analysis, where one snapshot may legitimately be counted under more than one genre. In that case, totals across genres are not expected to match the total number of snapshots. This distinction is explicitly documented to prevent double counting in later dashboards.
+The view \texttt{dw.v\_genre\_membership\_analysis} supports tag-based analysis, where one snapshot may legitimately be counted under more than one genre. In that case, totals across genres are not expected to match the total number of snapshots. This distinction is explicitly documented to prevent double counting in later dashboards. For Phase 3, the main DW analysis views are exported as BI-ready CSV files for Tableau Public, including \texttt{v\_fact\_app\_snapshot\_enriched\_rows.csv} and \texttt{v\_genre\_weighted\_kpis\_rows.csv}. The Tableau genre dashboard uses the exported \texttt{v\_genre\_weighted\_kpis\_rows.csv} file, derived from the weighted genre KPI view, to avoid double-counting multi-genre app snapshots.
 
 
 \section{Final Result of Phase 1 and Phase 2}

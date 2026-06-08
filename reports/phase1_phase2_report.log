@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.10.4)  9 MAY 2026 23:22
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.10.4)  8 JUN 2026 09:35
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -371,35 +371,52 @@ Package caption Info: longtable package is loaded.
  (D:\MiKTeX\tex/latex/caption\ltcaption.sty
 Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
 ))
-Package hyperref Info: Option `colorlinks' set `true' on input line 23.
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 35.
- (D:\MiKTeX\tex/latex/lm\t1lmr.fd
+
+d:/__DW__googleplaystore__/reports/phase1_phase2_report.tex:27: LaTeX Error: Option clash for package hyperref.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.27 \captionsetup
+                  {font=small}
+The package hyperref has already been loaded with options:
+  []
+There has now been an attempt to load it with options
+  [colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]
+Adding the global options:
+  ,colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue
+to your \documentclass declaration may fix this.
+Try typing  <return>  to proceed.
+
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 37.
+(D:\MiKTeX\tex/latex/lm\t1lmr.fd
 File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) (D:\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
 File: l3backend-pdftex.def 2025-06-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count326
-) (phase1_phase2_report.aux)
+)
+No file phase1_phase2_report.aux.
 \openout1 = `phase1_phase2_report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -434,13 +451,13 @@ LaTeX Font Info:    ... okay on input line 35.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Info: Redefining \microtypecontext on input line 35.
-Package microtype Info: Applying patch `item' on input line 35.
-Package microtype Info: Applying patch `toc' on input line 35.
-Package microtype Info: Applying patch `eqnum' on input line 35.
-Package microtype Info: Applying patch `footnote' on input line 35.
-Package microtype Info: Applying patch `verbatim' on input line 35.
-LaTeX Info: Redefining \microtypesetup on input line 35.
+LaTeX Info: Redefining \microtypecontext on input line 37.
+Package microtype Info: Applying patch `item' on input line 37.
+Package microtype Info: Applying patch `toc' on input line 37.
+Package microtype Info: Applying patch `eqnum' on input line 37.
+Package microtype Info: Applying patch `footnote' on input line 37.
+Package microtype Info: Applying patch `verbatim' on input line 37.
+LaTeX Info: Redefining \microtypesetup on input line 37.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -471,21 +488,14 @@ Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
  (D:\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
-)) (D:\MiKTeX\tex/latex/graphics\color.sty
-Package: color 2025/01/14 v1.3e Standard LaTeX Color (DPC)
- (D:\MiKTeX\tex/latex/graphics-cfg\color.cfg
-File: color.cfg 2016/01/02 v1.6 sample color configuration
-)
-Package color Info: Driver file: pdftex.def on input line 149.
- (D:\MiKTeX\tex/latex/graphics\mathcolor.ltx))
-Package hyperref Info: Link coloring ON on input line 35.
- (phase1_phase2_report.out) (phase1_phase2_report.out)
+))
+Package hyperref Info: Link coloring OFF on input line 37.
 \@outlinefile=\write3
 \openout3 = `phase1_phase2_report.out'.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 37.
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 39.
  (D:\MiKTeX\tex/latex/lm\t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
@@ -493,29 +503,31 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `lmtt' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 37.
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 39.
  (D:\MiKTeX\tex/latex/lm\ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 37.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 39.
  (D:\MiKTeX\tex/latex/lm\omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 37.
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 39.
  (D:\MiKTeX\tex/latex/lm\omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 37.
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 39.
  (D:\MiKTeX\tex/latex/lm\omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 37.
+(Font)              <12> on input line 39.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 37.
+(Font)              <8> on input line 39.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 37.
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 50.
+(Font)              <6> on input line 39.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10.95> on input line 40.
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 54.
  (D:\MiKTeX\tex/latex/lm\ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
@@ -523,135 +535,170 @@ File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 [1
 
 {C:/Users/Asus/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{D:/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}{D:/MiKTeX/fonts/enc/dvips/lm/lm-ts1.enc}]
-<./figures/reconciledSchema.png, id=155, 512.51476pt x 498.663pt>
+
+LaTeX Warning: Reference `fig:reconciled_schema' on page 2 undefined on input line 80.
+
+<./figures/reconciledSchema.png, id=19, 552.26324pt x 488.42474pt>
 File: ./figures/reconciledSchema.png Graphic file (type png)
 <use ./figures/reconciledSchema.png>
-Package pdftex.def Info: ./figures/reconciledSchema.png  used on input line 80.
-(pdftex.def)             Requested size: 455.24411pt x 442.94885pt.
+Package pdftex.def Info: ./figures/reconciledSchema.png  used on input line 84.
+(pdftex.def)             Requested size: 455.24411pt x 402.62746pt.
 
 
 [2]
 
 [3 <./figures/reconciledSchema.png>]
-Overfull \hbox (16.89163pt too wide) in paragraph at lines 112--113
+Overfull \hbox (16.89163pt too wide) in paragraph at lines 116--117
 []\T1/lmr/m/n/10.95 (-20) business at-tributes such as \T1/lmtt/m/n/10.95 last_updated_date\T1/lmr/m/n/10.95 (-20) , \T1/lmtt/m/n/10.95 current_version\T1/lmr/m/n/10.95 (-20) , and \T1/lmtt/m/n/10.95 android_version_text\T1/lmr/m/n/10.95 (-20) ; 
  []
 
-<./figures/attributeTree.png, id=174, 569.12625pt x 346.29375pt>
+<./figures/attributeTree.png, id=43, 569.12625pt x 346.29375pt>
 File: ./figures/attributeTree.png Graphic file (type png)
 <use ./figures/attributeTree.png>
-Package pdftex.def Info: ./figures/attributeTree.png  used on input line 120.
+Package pdftex.def Info: ./figures/attributeTree.png  used on input line 124.
 (pdftex.def)             Requested size: 409.71692pt x 249.31017pt.
 
 
 [4 <./figures/attributeTree.png>]
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 141.
-
 
 [5{D:/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}]
-<./figures/DFM_Schema.png, id=191, 585.98924pt x 347.49825pt>
+<./figures/DFM_Schema.png, id=64, 619.113pt x 362.5545pt>
 File: ./figures/DFM_Schema.png Graphic file (type png)
 <use ./figures/DFM_Schema.png>
-Package pdftex.def Info: ./figures/DFM_Schema.png  used on input line 197.
-(pdftex.def)             Requested size: 418.82375pt x 248.37451pt.
+Package pdftex.def Info: ./figures/DFM_Schema.png  used on input line 201.
+(pdftex.def)             Requested size: 418.82375pt x 245.26694pt.
 
 
 [6]
-Overfull \hbox (8.43234pt too wide) in paragraph at lines 215--216
+Overfull \hbox (8.43234pt too wide) in paragraph at lines 219--220
 []\T1/lmtt/m/n/10.95 dim_content_rating(content_rating_key, content_rating_id, content_rating_name) 
  []
 
 
-Overfull \hbox (31.42728pt too wide) in paragraph at lines 216--217
+Overfull \hbox (31.42728pt too wide) in paragraph at lines 220--221
 []\T1/lmtt/m/n/10.95 dim_last_updated_date(last_updated_date_key, full_date, day, month, quarter, year) 
  []
 
 
-Overfull \hbox (4.79172pt too wide) in paragraph at lines 225--228
+Overfull \hbox (4.79172pt too wide) in paragraph at lines 229--232
 []\T1/lmtt/m/n/10.95 fact_app_snapshot(app_snapshot_key, snapshot_id, app_key, category_key,
  []
 
 
-Overfull \hbox (65.15343pt too wide) in paragraph at lines 225--228
+Overfull \hbox (65.15343pt too wide) in paragraph at lines 229--232
 \T1/lmtt/m/n/10.95 content_rating_key, last_updated_date_key, rating, reviews_count, installs_count, 
  []
 
 
 
 [7 <./figures/DFM_Schema.png>]
-Overfull \hbox (1.85674pt too wide) in alignment at lines 268--274
+
+LaTeX Warning: Reference `fig:logical_schema' on page 8 undefined on input line 238.
+
+
+LaTeX Warning: Reference `tab:measure_glossary' on page 8 undefined on input line 270.
+
+
+Overfull \hbox (1.85674pt too wide) in alignment at lines 272--278
  [] [] [] [] 
  []
 
 
-Overfull \hbox (1.85674pt too wide) in alignment at lines 274--279
+Overfull \hbox (1.85674pt too wide) in alignment at lines 278--283
  [] [] [] [] 
  []
 
 
-Overfull \hbox (1.85674pt too wide) in alignment at lines 279--282
+Overfull \hbox (1.85674pt too wide) in alignment at lines 283--286
  [] [] [] [] 
  []
 
 
-Overfull \hbox (0.81447pt too wide) in paragraph at lines 288--288
+Overfull \hbox (0.81447pt too wide) in paragraph at lines 292--292
 []|\T1/lmtt/m/n/10.95 installs_count| 
  []
 
 
-Overfull \hbox (1.85674pt too wide) in alignment at lines 282--293
+Overfull \hbox (1.85674pt too wide) in alignment at lines 286--297
  [] [] [] [] 
  []
 
 
 
 [8{D:/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}]
-<./figures/starSchema.png, id=212, 389.65575pt x 516.12825pt>
+<./figures/starSchema.png, id=91, 625.1355pt x 476.37975pt>
 File: ./figures/starSchema.png Graphic file (type png)
 <use ./figures/starSchema.png>
-Package pdftex.def Info: ./figures/starSchema.png  used on input line 297.
-(pdftex.def)             Requested size: 409.71692pt x 542.7382pt.
+Package pdftex.def Info: ./figures/starSchema.png  used on input line 301.
+(pdftex.def)             Requested size: 409.71692pt x 312.22363pt.
 
 
 [9]
 
 [10 <./figures/starSchema.png>]
 
+LaTeX Warning: Reference `tab:phase2_reconciliation_counts' on page 11 undefined on input line 329.
+
+
+LaTeX Warning: Reference `tab:baseline_dqa' on page 11 undefined on input line 357.
+
+
+
 [11]
-Overfull \hbox (20.7959pt too wide) in paragraph at lines 382--383
+Overfull \hbox (20.7959pt too wide) in paragraph at lines 387--388
 []\T1/lmr/m/n/10.95 (-20) values equal to \T1/lmtt/m/n/10.95 Varies with device \T1/lmr/m/n/10.95 (-20) are ex-plic-itly iden-ti-fied by \T1/lmtt/m/n/10.95 size_varies_with_device_flag\T1/lmr/m/n/10.95 (-20) ; 
  []
 
 
-Overfull \hbox (25.05057pt too wide) in paragraph at lines 391--392
+Overfull \hbox (25.05057pt too wide) in paragraph at lines 396--397
 \T1/lmtt/m/n/10.95 clean.app_snapshot_clean\T1/lmr/m/n/10.95 (-20) , \T1/lmtt/m/n/10.95 clean.app_snapshot_genre_clean\T1/lmr/m/n/10.95 (-20) , and \T1/lmtt/m/n/10.95 clean.cleaning_audit_log\T1/lmr/m/n/10.95 (-20) .
  []
+
+
+LaTeX Warning: Reference `tab:cleaning_summary' on page 12 undefined on input line 398.
 
 
 
 [12]
 
-[13]
-Overfull \hbox (29.43434pt too wide) in paragraph at lines 462--463
+LaTeX Warning: Reference `tab:audit_summary' on page 13 undefined on input line 428.
+
+
+LaTeX Warning: Reference `tab:genre_distribution' on page 13 undefined on input line 451.
+
+
+Overfull \hbox (29.43434pt too wide) in paragraph at lines 467--468
 \T1/lmr/m/n/10.95 (-20) two gen-res and could lead to dou-ble count-ing. To pre-vent this is-sue, \T1/lmtt/m/n/10.95 clean.app_snapshot_genre_clean
  []
 
 
-Overfull \hbox (46.30907pt too wide) in paragraph at lines 471--472
+
+[13]
+Overfull \hbox (46.30907pt too wide) in paragraph at lines 476--477
 []\T1/lmr/m/n/10.95 (-20) dimensions: \T1/lmtt/m/n/10.95 dim_app\T1/lmr/m/n/10.95 (-20) , \T1/lmtt/m/n/10.95 dim_category\T1/lmr/m/n/10.95 (-20) , \T1/lmtt/m/n/10.95 dim_app_type\T1/lmr/m/n/10.95 (-20) , \T1/lmtt/m/n/10.95 dim_content_rating\T1/lmr/m/n/10.95 (-20) , \T1/lmtt/m/n/10.95 dim_last_updated_date\T1/lmr/m/n/10.95 (-20) ,
  []
 
 
-Overfull \hbox (117.20364pt too wide) in paragraph at lines 474--475
+Overfull \hbox (117.20364pt too wide) in paragraph at lines 479--480
 []\T1/lmr/m/n/10.95 (-20) analysis views: \T1/lmtt/m/n/10.95 v_fact_app_snapshot_enriched\T1/lmr/m/n/10.95 (-20) , \T1/lmtt/m/n/10.95 v_genre_fractional_analysis\T1/lmr/m/n/10.95 (-20) , \T1/lmtt/m/n/10.95 v_genre_membership_analysis\T1/lmr/m/n/10.95 (-20) ,
  []
 
 
+LaTeX Warning: Reference `tab:dw_load_summary' on page 14 undefined on input line 485.
+
+
+LaTeX Warning: Reference `tab:dw_integrity_checks' on page 14 undefined on input line 511.
+
+
 
 [14]
-Overfull \hbox (1.0089pt too wide) in paragraph at lines 528--529
+Overfull \hbox (1.0089pt too wide) in paragraph at lines 533--534
 \T1/lmr/m/n/10.95 (-20) which ex-poses weighted mea-sures such as \T1/lmtt/m/n/10.95 weighted_reviews_count\T1/lmr/m/n/10.95 (-20) , \T1/lmtt/m/n/10.95 weighted_installs_count\T1/lmr/m/n/10.95 (-20) ,
+ []
+
+
+Overfull \hbox (26.46156pt too wide) in paragraph at lines 535--536
+\T1/lmr/m/n/10.95 (-20) ported as BI-ready CSV files for Tableau Pub-lic, in-clud-ing \T1/lmtt/m/n/10.95 v_fact_app_snapshot_enriched_rows.csv
  []
 
 
@@ -663,21 +710,34 @@ Overfull \hbox (1.0089pt too wide) in paragraph at lines 528--529
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-09-02>
  ***********
-Package rerunfilecheck Info: File `phase1_phase2_report.out' has not changed.
-(rerunfilecheck)             Checksum: 2564EB7BF5DE8EE8677EB925C2AD1168;7060.
+
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package rerunfilecheck Warning: File `phase1_phase2_report.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `phase1_phase2_report.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  2564EB7BF5DE8EE8677EB925C2AD1168;7060.
  ) 
 Here is how much of TeX's memory you used:
- 14334 strings out of 468130
- 227497 string characters out of 5447471
- 684082 words of memory out of 5000000
- 42544 multiletter control sequences out of 15000+600000
- 684476 words of font info for 139 fonts, out of 8000000 for 9000
+ 14222 strings out of 468130
+ 225425 string characters out of 5447471
+ 680181 words of memory out of 5000000
+ 42443 multiletter control sequences out of 15000+600000
+ 684570 words of font info for 140 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,9n,79p,1052b,615s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,9n,79p,1052b,588s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <D:/MiKTeX/fonts/type1/public/lm/lmbx10.pfb><D:/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><D:/MiKTeX/fonts/type1/public/lm/lmr10.pfb><D:/MiKTeX/fonts/type1/public/lm/lmr17.pfb><D:/MiKTeX/fonts/type1/public/lm/lmri10.pfb><D:/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><D:/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><D:/MiKTeX/fonts/type1/public/lm/lmtt12.pfb>
-Output written on phase1_phase2_report.pdf (16 pages, 479059 bytes).
+Output written on phase1_phase2_report.pdf (16 pages, 509392 bytes).
 PDF statistics:
- 346 PDF objects out of 1000 (max. 8388607)
+ 231 PDF objects out of 1000 (max. 8388607)
  95 named destinations out of 1000 (max. 500000)
- 35629 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 35349 words of extra memory for PDF output out of 35830 (max. 10000000)
 
